@@ -1,34 +1,42 @@
 var map;
+var bingKey = "Au7WHSbnl7QjoAn2db3TJNyCF-xf5ttJyZuVcc56feFlA_Inivd2T0V3BNgbNGVs";
 
-function init() {
-  map = new OpenLayers.Map('map');
-  map.addLayers([
-    new OpenLayers.Layer.OSM("Open Street Map"),
-    /*TODO: WMS uses a default projection ("EPSG:4326") which doesn't have a direct mapping to the Spherical Mercator of OSM 
-     * and Google. Figure out how to project it.*/
-    //new OpenLayers.Layer.WMS("Web Map Service","http://vmap0.tiles.osgeo.org/wms/vmap0", {layers: 'basic'}),
-    new OpenLayers.Layer.Google("Google Streets"),
-  ]);
-  var drawingLayer = new OpenLayers.Layer.Vector("Drawing Layer")
-  map.addLayer(drawingLayer);
-  map.addControls([
-  	new OpenLayers.Control.LayerSwitcher(),
-  	new OpenLayers.Control.EditingToolbar(drawingLayer)
-  ]);
-  map.zoomToMaxExtent();
-}
+window.onload = function() {
+	map = new OpenLayers.Map('map');
 
-function addUrl(fileurl) {
-  map.addLayer(new OpenLayers.Layer.Vector("KML", {
-    strategies: [new OpenLayers.Strategy.Fixed()],
-    protocol: new OpenLayers.Protocol.HTTP({
-      url: fileurl,
-      format: new OpenLayers.Format.KML({
-        extractStyles: true, 
-        extractAttributes: true
-      })
-    })
-  }));
-  //new OpenLayers.Layer.GeoRSS( "http://openlayers.org/dev/examples/georss.xml" ));
-}
-        
+	var osm = new OpenLayers.Layer.OSM("Open Street Map");
+	var googleRoads = new OpenLayers.Layer.Google("Google Streets");
+	var bingRoads = new OpenLayers.Layer.Bing({
+		name : "Bing Roads",
+		key : bingKey,
+		type : "Road"
+	});
+	var googlePhysical = new OpenLayers.Layer.Google("Google Physical", {
+		type : google.maps.MapTypeId.TERRAIN
+	});
+	var googleHybrid = new OpenLayers.Layer.Google("Google Hybrid", {
+		type : google.maps.MapTypeId.HYBRID
+	});
+	var bingHybrid = new OpenLayers.Layer.Bing({
+		name : "Bing Hybrid",
+		key : bingKey,
+		type : "AerialWithLabels"
+	});
+	var googleAerial = new OpenLayers.Layer.Google("Google Satellite", {
+		type : google.maps.MapTypeId.SATELLITE
+	});
+	var bingAerial = new OpenLayers.Layer.Bing({
+		name : "Bing Aerial",
+		key : bingKey,
+		type : "Aerial"
+	});
+
+	map.addLayers([osm, googleRoads, bingRoads, googlePhysical, googleHybrid, bingHybrid, googleAerial, bingAerial]);
+
+	var drawingLayer = new OpenLayers.Layer.Vector("Drawing Layer")
+	map.addLayer(drawingLayer);
+
+	map.addControls([new OpenLayers.Control.LayerSwitcher(), new OpenLayers.Control.EditingToolbar(drawingLayer)]);
+
+	map.zoomToMaxExtent();
+};
