@@ -36,7 +36,7 @@ window.onload = function() {
 	var drawingLayer = new OpenLayers.Layer.Vector("Drawing Layer")
 	map.addLayer(drawingLayer);
 
-	map.addControls([new OpenLayers.Control.LayerSwitcher(), new OpenLayers.Control.EditingToolbar(drawingLayer)]);
+	map.addControls([new OpenLayers.Control.LayerSwitcher(), new OpenLayers.Control.EditingToolbar(drawingLayer), new OpenLayers.Control.MousePosition({displayProjection:"EPSG:4326"})]);
 
 	map.zoomToMaxExtent();
 };
