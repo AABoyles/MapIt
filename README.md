@@ -10,7 +10,7 @@ It is HTML5, XHTML 1.1 Polyglot compliant.
 LICENSE
 -------
 
-Copyright (c) 2012-3, Tony Boyles, OSM FullScreen
+Copyright (c) 2012-3, Tony Boyles
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
